@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Trata Infantil</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+  <link rel="stylesheet" href="style_tablero_turismo.css">
+</head>
+
+<body style="margin: 0px;">
+  <div style="display: flex;">
+    <div style="width: 50%; height: 100vh;display:block;">
+      <div style="width: 100%;height: 50vh;padding-top: 25vh;text-align: center; z-index: 2;"><img
+          style="opacity: 1;display: inline-block;text-align: center;" src="imagenes/cargando.png" alt=""></div>
+      <iframe id="mapa_web_frame" src="Leaflet/mapa_web_turismo_indicadores.html" frameborder="0"
+        style="display: block;width: 100%;z-index: 1;opacity: 0; height: 50vh; border: 0px;"></iframe>
+    </div>
+    <div style="display: block;width: 20%;height: 100vh;border: 0px;border-color: aqua;">
+      <div style="display: block;width: 100%;height: 33vh;border: 1px solid;margin-top: 1vh;border-color: black;">
+
+        <div class="slideshow-container slideCounter" style="position: relative; height: 100%;">
+
+          <!-- Slider 1 -->
+          <div class="slider1 mySlides1">
+            <canvas id="myChart1_1"></canvas>
+          </div>
+          
+          <!-- Contenedor para el título "Educación" -->
+          <div style="position: absolute; bottom: 0; width: 100%; border-top: solid 0px aqua; padding: 0px 0;">
+            <h2 style="text-align: center; margin: 0;">Turistas</h2>
+          </div>
+        </div>
+
+      </div>
+      <div
+        style="display: block; width: 100%; height: 32vh; border: 1px solid; border-color: black; position: relative;">
+        <div class="slideshow-container slideCounter" style="height: 100%;">
+
+          <!-- Slider 2 -->
+          <div class="slider2 mySlides2">
+            <canvas id="myChart2_1"></canvas>
+          </div>
+          <!-- Contenedor para el título "Condiciones Laborales" -->
+          <div style="position: absolute; bottom: 0; width: 100%; border-top: solid 0px aqua; padding: 0px 0;">
+            <h2 style="text-align: center; margin: 0;">Visitantes de museos</h2>
+          </div>
+        </div>
+      </div>
+      <div style="display: block;width: 100%;height: 32vh;border: 1px solid;border-color: black;position: relative;">
+        <div class="slideshow-container slideCounter" style="height: 100%;">
+
+          <!-- Slider 3 -->
+          <div class="slider3 mySlides3">
+            <canvas id="myChart3_1"></canvas>
+          </div>
+
+          <div style="position: absolute; bottom: 0; width: 100%; border-top: solid 0px aqua; padding: 0px 0;">
+            <h2 style="text-align: center; margin: 0;">Visitantes de zonas Arqueológicas</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: block;width: 30%;height: 99vh;border: 0px solid;border-color: aqua;">
+      <div style="display: block;width: 100%;height: 66vh;border-top: 0px solid;border-color: aqua;box-sizing: border-box">
+        <div class="slideshow-container slideCounter" style="position: relative; height: 100%;">
+          <div>
+            <h3 style="margin-top: 1px;margin-bottom: 2px;margin-left: 8px;width: 90%;height: 4vh;">Selecciona municipios:</h3>
+            <input 
+            type="text" 
+            id="search-bar" 
+            placeholder="Buscar municipio..." 
+            style="width: 70%;height: 4vh; padding: 4px; margin-bottom: 2px;margin-top:0px;margin-left: 12px;margin-top: 0;" 
+            />
+            <div style="height: 8vh;" id="checkbox-container">
+              <!-- Los checkboxes se generarán dinámicamente con JavaScript -->
+            </div>
+          </div>
+          <!-- Slider 1 -->
+          <div style='text-align: center;' class="slider4 mySlides4">
+            <canvas id="myChart4_1"></canvas>
+          </div>
+
+          
+        </div>
+
+      </div>
+      <div style="display: block;width: 100%;height: 32vh;border-top: 1px solid;border-color: black;box-sizing: border-box;">
+        <div class="slideshow-container slideCounter" style="position: relative; height: 100%;">
+
+          <!-- Slider 1 -->
+          <div class="slider5 mySlides5">
+            <canvas id="myChart5_1"></canvas>
+          </div></div>
+      </div>
+      <script src="tablero_turismo.js">
+
+      </script>
+    </div>
+    <script>
+      let slideIndices = [1, 1, 1, 1, 1]; // Índice inicial para cada slider
+      showSlides(1, slideIndices[0]);
+      showSlides(2, slideIndices[1]);
+      showSlides(3, slideIndices[2]);
+      showSlides(4, slideIndices[3]);
+      showSlides(5, slideIndices[4]);
+
+      function plusSlides(sliderNum, n) {
+        showSlides(sliderNum, slideIndices[sliderNum - 1] += n);
+
+        // Actualizar el contador de la diapositiva actual
+        updateSlideCounter(sliderNum);
+      }
+
+      function showSlides(sliderNum, n) {
+        let slides = document.getElementsByClassName("mySlides" + sliderNum);
+        if (n > slides.length) { slideIndices[sliderNum - 1] = 1 }
+        if (n < 1) { slideIndices[sliderNum - 1] = slides.length }
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        slides[slideIndices[sliderNum - 1] - 1].style.display = "block";
+      }
+
+      function updateSlideCounter(sliderNum) {
+        // Obtener el número actual de la diapositiva y el total
+        const currentSlide = slideIndices[sliderNum - 1];
+        const totalSlides = document.getElementsByClassName("mySlides" + sliderNum).length;
+
+        // Actualizar el texto del contador
+        // Para resolver:
+
+        document.getElementsByClassName("slideCounter")[sliderNum - 1].children[0].innerHTML = currentSlide + "/" + totalSlides;
+      }
+      const iframe = document.getElementById('mapa_web_frame');
+      iframe.addEventListener('load', () => {
+        document.getElementById("mapa_web_frame").style.height = '100vh'
+        document.getElementById("mapa_web_frame").style.opacity = 1
+        document.getElementById("mapa_web_frame").parentElement.children[0].style.display = 'none'
+      });
+    </script>
+
+  </div>
+</body>
+
+</html>
