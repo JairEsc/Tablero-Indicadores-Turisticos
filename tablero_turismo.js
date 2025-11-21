@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //let municipios=[]
   let datosPIB = [];
   let municipios = [];
-  fetch("datos/pib_turismo.csv")
+  fetch("inputs/datos/pib_turismo.csv")
     .then((response) => response.text())
     .then((data) => {
       // Dividir las líneas del archivo CSV
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     let years_interes=[2018,2019,2020,2021,2022,2023]
     let indicadores=[[],[],[],[],[],[],[],[],[],[],[]]
-    fetch("datos/IND_TURISMO_ESTATAL.csv")
+    fetch("inputs/datos/IND_TURISMO_ESTATAL.csv")
     .then((response) => response.text())
     .then((data) => {
       // Dividir las líneas del archivo CSV
